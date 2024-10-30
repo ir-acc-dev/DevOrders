@@ -49,4 +49,25 @@ public class StepController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping("/{id}/des")
+    public ResponseEntity<Step> updateStepDescription(@PathVariable Long id, @RequestBody String description) {
+        try {
+            Step updatedStep = stepService.updateStepDescription(id, description);
+            return new ResponseEntity<>(updatedStep, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/tasks/{taskId}/des")
+    public ResponseEntity<Task> updateTaskDescription(@PathVariable Long taskId, @RequestBody String description) {
+        try {
+            Task updatedTask = stepService.updateTaskDescription(taskId, description);
+            return new ResponseEntity<>(updatedTask, HttpStatus.OK);
+        }catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

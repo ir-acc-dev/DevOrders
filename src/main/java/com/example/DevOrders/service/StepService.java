@@ -45,4 +45,21 @@ public class StepService {
         }
         throw new RuntimeException("Step not found");
     }
+
+    // Method to update a step description
+    public Step updateStepDescription(Long id, String stepDescription) {
+        Step step = stepRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Step not found"));
+        step.setDescription(stepDescription);
+        return stepRepository.save(step);
+    }
+
+    // Method to update a task description
+    public Task updateTaskDescription(Long id, String taskDescription) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+        task.setDescription(taskDescription);
+        return taskRepository.save(task);
+    }
+
 }
