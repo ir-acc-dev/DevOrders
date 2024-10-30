@@ -1,18 +1,17 @@
 package com.example.DevOrders.entity;
 
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name="Step")
 public class Step {
@@ -21,13 +20,20 @@ public class Step {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(nullable = false)
     private String description;
 
-    private Boolean taskComplete;
+    private Boolean stepComplete;
 
-    @OneToMany(mappedBy = "step", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Subtask> subtasks;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "task_fk", referencedColumnName = "id")
+    List<Task> tasks = new ArrayList<>();
+
+    public Step(String description, Boolean stepComplete) {
+        super();
+        this.description = description;
+        this.stepComplete = stepComplete;
+    }
+
 
 }

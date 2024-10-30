@@ -8,11 +8,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name="Subtask")
-public class Subtask {
+@Table(name = "tasks")
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +21,5 @@ public class Subtask {
     @Column(nullable = false)
     private String description;
 
-    private Boolean subtaskComplete = false;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "step_id", nullable = false)
-    private Step step;
-
+    private Boolean taskComplete;
 }
