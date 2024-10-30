@@ -62,4 +62,36 @@ public class StepService {
         return taskRepository.save(task);
     }
 
+    // Method to toggle step completion
+    public Step toggleStepCompletion(Long stepId) {
+        Step step = stepRepository.findById(stepId)
+                .orElseThrow(() -> new RuntimeException("Step not found"));
+        step.setStepComplete(!step.getStepComplete());
+        return stepRepository.save(step);
+    }
+
+    // Method to toggle task completion
+    public Task toggleTaskCompletion(Long taskId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+        task.setTaskComplete(!task.getTaskComplete());
+        return taskRepository.save(task);
+    }
+
+    // Method to delete a step
+    public void deleteStep(Long stepId) {
+        if(!stepRepository.existsById(stepId)) {
+            throw new RuntimeException("Step not found");
+        }
+        stepRepository.deleteById(stepId);
+    }
+
+    // Method to delete a task
+    public void deleteTask(Long taskId) {
+        if(!taskRepository.existsById(taskId)) {
+            throw new RuntimeException("Task not found");
+        }
+        taskRepository.deleteById(taskId);
+    }
+
 }

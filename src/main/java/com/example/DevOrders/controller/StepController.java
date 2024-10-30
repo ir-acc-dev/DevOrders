@@ -70,4 +70,46 @@ public class StepController {
         }
     }
 
+    @PutMapping("/{id}/toggle-completion")
+    public ResponseEntity<Step> toggleStepCompletion(@PathVariable Long id) {
+        try{
+            Step updatedStep = stepService.toggleStepCompletion(id);
+            return new ResponseEntity<>(updatedStep, HttpStatus.OK);
+        }catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/tasks/{taskId}/toggle-completion")
+    public ResponseEntity<Task> toggleTaskCompletion(@PathVariable Long taskId) {
+        try{
+            Task updatedTask = stepService.toggleTaskCompletion(taskId);
+            return new ResponseEntity<>(updatedTask, HttpStatus.OK);
+        }catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Delete a Step
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteStep(@PathVariable Long id) {
+        try {
+            stepService.deleteStep(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Delete a Task
+    @DeleteMapping("/tasks/{taskId}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
+        try {
+            stepService.deleteTask(taskId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
