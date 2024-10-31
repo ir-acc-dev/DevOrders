@@ -16,17 +16,26 @@ export const updateStepDescription = (id, description) => {
     });
 };
 
+export const updateTaskDescription = (id, description) => {
+    return axios.put(BASE_URL + "/tasks/" + id + "/des", description, {
+        headers: {
+            'Content-Type': 'text/plain'
+        }
+    });
+};
 
 
-
-
-
-// @PutMapping("/{id}/des")
-// public ResponseEntity<Step> updateStepDescription(@PathVariable Long id, @RequestBody String description) {
+// @PutMapping("/tasks/{taskId}/des")
+// public ResponseEntity<Task> updateTaskDescription(@PathVariable Long taskId, @RequestBody String description) {
 //     try {
-//         Step updatedStep = stepService.updateStepDescription(id, description);
-//         return new ResponseEntity<>(updatedStep, HttpStatus.OK);
-//     } catch (RuntimeException e) {
+//         Task updatedTask = stepService.updateTaskDescription(taskId, description);
+//         return new ResponseEntity<>(updatedTask, HttpStatus.OK);
+//     }catch (RuntimeException e) {
 //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //     }
 // }
+
+
+
+
+

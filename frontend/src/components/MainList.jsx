@@ -5,7 +5,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import AddIcon from '@mui/icons-material/Add';
 import React, { useEffect, useState } from "react";
-import {addStep, getAllSteps, addTask, updateStepDescription} from "../assets/Client.js";
+import {addStep, getAllSteps, addTask, updateStepDescription, updateTaskDescription} from "../assets/Client.js";
 
 const MainList = () => {
     const [expandedRows, setExpandedRows] = useState({});
@@ -16,6 +16,8 @@ const MainList = () => {
     const [addingTaskForStep, setAddingTaskForStep] = useState(null);
     const [editingStepId, setEditingStepId] = useState(null);
     const [editingStepDescription, setEditingStepDescription] = useState("");
+    const [editingTaskId, setEditingTaskId] = useState(null);
+    const [editingTaskDescription, setEditingTaskDescription] = useState("");
 
     const listAllSteps = async () => {
         try {
@@ -95,6 +97,30 @@ const MainList = () => {
         }
     }
 
+    const handleEditTaskClick = (task) => {
+        setEditingTaskId(task.id);
+        setEditingTaskDescription(task.description);
+    }
+
+    const handleSaveEditedTask = async (id) => {
+        try {
+            await updateTaskDescription(id, editingTaskDescription);
+            setSteps((prevSteps) =>
+                prevSteps.map((step) => ({
+                    ...step,
+                    tasks: step.tasks.map((task) =>
+                        task.id === id ? { ...task, description: editingTaskDescription } : task
+                    )
+                }))
+            );
+            setEditingTaskId(null);
+            setEditingTaskDescription("");
+        } catch (err) {
+            console.error("Failed to edit Task", err);
+        }
+    }
+
+
     return (
         <Box>
             <Typography variant="h4">List</Typography>
@@ -159,9 +185,23 @@ const MainList = () => {
                                                             <TableCell style={{ width: "10%" }}>
                                                                 <Checkbox checked={task.taskComplete} />
                                                             </TableCell>
-                                                            <TableCell style={{ width: "70%", paddingLeft: 32 }}>{task.description}</TableCell>
+                                                            <TableCell style={{ width: "70%", paddingLeft: 32 }}>
+                                                                {editingTaskId === task.id ? (
+                                                                    <TextField
+                                                                        fullWidth
+                                                                        value={editingTaskDescription}
+                                                                        onChange={(e) => setEditingTaskDescription(e.target.value)}
+                                                                    />
+                                                                ) : (
+                                                                    task.description
+                                                                )}
+                                                            </TableCell>
                                                             <TableCell style={{ width: "20%" }}>
-                                                                <Button>Edit</Button>
+                                                                {editingTaskId === task.id ? (
+                                                                    <Button onClick={() => handleSaveEditedTask(task.id)}>Save</Button>
+                                                                ) : (
+                                                                    <Button onClick={() => handleEditTaskClick(task)}>Edit</Button>
+                                                                )}
                                                                 <Button>Delete</Button>
                                                             </TableCell>
                                                         </TableRow>
