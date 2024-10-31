@@ -8,13 +8,24 @@ export const addStep = (step) => axios.post(BASE_URL, step);
 
 export const addTask = (id, task)  => axios.post(BASE_URL + "/" + id + "/" + "tasks", task);
 
+export const updateStepDescription = (id, description) => {
+    return axios.put(BASE_URL + "/" + id + "/des", description, {
+        headers: {
+            'Content-Type': 'text/plain'
+        }
+    });
+};
 
 
-// @PostMapping("/{id}/tasks")
-// public ResponseEntity<Task> addTask(@PathVariable Long id, @RequestBody Task task) {
+
+
+
+
+// @PutMapping("/{id}/des")
+// public ResponseEntity<Step> updateStepDescription(@PathVariable Long id, @RequestBody String description) {
 //     try {
-//         Task createdTask = stepService.addTaskToStep(id, task);
-//         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
+//         Step updatedStep = stepService.updateStepDescription(id, description);
+//         return new ResponseEntity<>(updatedStep, HttpStatus.OK);
 //     } catch (RuntimeException e) {
 //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //     }

@@ -5,7 +5,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import AddIcon from '@mui/icons-material/Add';
 import React, { useEffect, useState } from "react";
-import { addStep, getAllSteps, addTask } from "../assets/Client.js";
+import {addStep, getAllSteps, addTask, updateStepDescription} from "../assets/Client.js";
 
 const MainList = () => {
     const [expandedRows, setExpandedRows] = useState({});
@@ -13,7 +13,9 @@ const MainList = () => {
     const [isAddingStep, setIsAddingStep] = useState(false);
     const [newStepDescription, setNewStepDescription] = useState("");
     const [newTaskDescription, setNewTaskDescription] = useState("");
-    const [addingTaskForStep, setAddingTaskForStep] = useState(null); // Stores the ID of the step we're adding a task for
+    const [addingTaskForStep, setAddingTaskForStep] = useState(null);
+    const [editingStepId, setEditingStepId] = useState(null);
+    const [editingStepDescription, setEditingStepDescription] = useState("");
 
     const listAllSteps = async () => {
         try {
@@ -72,6 +74,26 @@ const MainList = () => {
         }
     };
 
+    const handleEditStepClick = (step) => {
+        setEditingStepId(step.id);
+        setEditingStepDescription(step.description);
+    }
+
+    const handleSaveEditedStep = async (id) => {
+        try {
+            await updateStepDescription(id, editingStepDescription);
+            setSteps((prevSteps) =>
+                prevSteps.map((step) =>
+                    step.id === id ? {...step, description: editingStepDescription } : step
+                )
+            );
+            setEditingStepId(null);
+            setEditingStepDescription("");
+        } catch (err) {
+            console.error("Failed to edit Step", err);
+        }
+    }
+
     return (
         <Box>
             <Typography variant="h4">List</Typography>
@@ -95,9 +117,25 @@ const MainList = () => {
                                     <TableCell>
                                         <Checkbox checked={step.stepComplete} />
                                     </TableCell>
-                                    <TableCell>{step.description}</TableCell>
+
                                     <TableCell>
-                                        <Button>Edit</Button>
+                                        {editingStepId === step.id ? (
+                                            <TextField
+                                                fullWidth
+                                                value={editingStepDescription}
+                                                onChange={(e) => setEditingStepDescription(e.target.value)}
+                                            />
+                                        ) : (
+                                            step.description
+                                        )}
+                                    </TableCell>
+
+                                    <TableCell>
+                                        {editingStepId === step.id ? (
+                                            <Button onClick={() => handleSaveEditedStep(step.id)}>Save</Button>
+                                        ) : (
+                                            <Button onClick={() => handleEditStepClick(step)}>Edit</Button>
+                                        )}
                                         <Button>Delete</Button>
                                         <IconButton onClick={() => handleAddTaskClick(step.id)}>
                                             <AddIcon />
@@ -106,6 +144,8 @@ const MainList = () => {
                                             {expandedRows[step.id] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                                         </IconButton>
                                     </TableCell>
+
+
                                 </TableRow>
 
                                 <TableRow>
