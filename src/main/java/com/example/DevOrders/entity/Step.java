@@ -35,5 +35,4 @@ public class Step {
         this.stepComplete = stepComplete;
     }
 
-
 }

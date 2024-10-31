@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/steps")
 public class StepController {
@@ -90,7 +91,6 @@ public class StepController {
         }
     }
 
-    // Delete a Step
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStep(@PathVariable Long id) {
         try {
@@ -101,7 +101,6 @@ public class StepController {
         }
     }
 
-    // Delete a Task
     @DeleteMapping("/tasks/{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
         try {
