@@ -20,7 +20,8 @@ const MainList = () => {
     const listAllSteps = async () => {
         try {
             const res = await getAllSteps();
-            setSteps(res.data);
+            const sortedSteps = res.data.sort((a,b) => a.id - b.id);
+            setSteps(sortedSteps);
         } catch (err) {
             console.error(err);
         }
