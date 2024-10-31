@@ -1,15 +1,15 @@
-import {
-    Box, Button, Checkbox, Collapse, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography
-} from "@mui/material";
+import {Box, Button, Checkbox, Collapse, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import React, {useEffect, useState} from "react";
-import {getAllSteps} from "../assets/Client.js";
+import {addStep, getAllSteps} from "../assets/Client.js";
 
 const MainList = () => {
 
     const [expandedRows, setExpandedRows] = useState({});
     const [steps, setSteps] = useState([]);
+    const [isAddingStep, setIsAddingStep] = useState(false);
+    const [newStepDescription, setNewStepDescription] = useState("");
 
     const listAllSteps = async () => {
         getAllSteps()
@@ -22,26 +22,6 @@ const MainList = () => {
         listAllSteps();
     }, [])
 
-    // const steps = [
-    //     {
-    //         id: 1,
-    //         description: "Step 1",
-    //         stepComplete: true,
-    //         tasks: [
-    //             { id: 1.1, description: "Task 1.1", taskComplete: false },
-    //             { id: 1.2, description: "Task 1.2", taskComplete: false }
-    //         ]
-    //     },
-    //     {
-    //         id: 2,
-    //         description: "Step 2",
-    //         stepComplete: false,
-    //         tasks: [
-    //             { id: 2.1, description: "Task 2.1", taskComplete: true },
-    //             { id: 2.2, description: "Task 2.2", taskComplete: false }
-    //         ]
-    //     }
-    // ];
 
     const handleExpandClick = (id) => {
         setExpandedRows((prev) => ({
@@ -50,9 +30,29 @@ const MainList = () => {
         }));
     };
 
+    const handleAddStep = () => {
+        setIsAddingStep(true);
+    }
+
+    const handleSaveStep = async () => {
+        try {
+            const newStep = {description: newStepDescription, stepComplete: false};
+            const response = await addStep(newStep);
+            setSteps((prevSteps) => [...prevSteps, response.data]);
+            setNewStepDescription("");
+            setIsAddingStep(false);
+        } catch (err) {
+            console.error("Failed to add Step", err);
+        }
+    }
+
     return (
         <Box>
             <Typography variant="h4">List</Typography>
+            <Button onClick={handleAddStep} variant = "contained" color="primary" style={{ margin: '10px 0' }}>
+                Add Step
+            </Button>
+
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
@@ -107,6 +107,29 @@ const MainList = () => {
                                 </TableRow>
                             </React.Fragment>
                         ))}
+
+                        {/*New Step Row*/}
+                        {isAddingStep && (
+                            <TableRow>
+                                <TableCell>
+                                    <Checkbox disabled />
+                                </TableCell>
+
+                                <TableCell>
+                                    <TextField
+                                        fullWidth
+                                        value={newStepDescription}
+                                        onChange={(e) => setNewStepDescription(e.target.value)}
+                                        placeholder="Enter step description" />
+                                </TableCell>
+
+                                <TableCell>
+                                    <Button onClick={handleSaveStep} variant="contained" color="primary">Save Step</Button>
+                                </TableCell>
+
+                            </TableRow>
+                        )}
+
                     </TableBody>
                 </Table>
             </TableContainer>
