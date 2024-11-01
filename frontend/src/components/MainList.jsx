@@ -5,7 +5,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import AddIcon from '@mui/icons-material/Add';
 import React, { useEffect, useState } from "react";
-import {addStep, getAllSteps, addTask, updateStepDescription, updateTaskDescription} from "../assets/Client.js";
+import {
+    addStep,
+    getAllSteps,
+    addTask,
+    updateStepDescription,
+    updateTaskDescription,
+    toggleStepCompletion
+} from "../assets/Client.js";
 
 const MainList = () => {
     const [expandedRows, setExpandedRows] = useState({});
@@ -120,6 +127,20 @@ const MainList = () => {
         }
     }
 
+    const handleStepToggleCompletion = (id) => {
+        toggleStepCompletion(id)
+            .then((response) => {
+                const updatedStep = response.data;
+                setSteps((prevSteps) =>
+                    prevSteps.map((step) =>
+                        step.id === id ? {...step, stepComplete: updatedStep.stepComplete} : step
+                    )
+                )
+            }).catch((error) => {
+                console.error("Failed to edit Step", error);
+        })
+    }
+
 
     return (
         <Box>
@@ -142,7 +163,7 @@ const MainList = () => {
                             <React.Fragment key={step.id}>
                                 <TableRow className="table-row">
                                     <TableCell>
-                                        <Checkbox checked={step.stepComplete} />
+                                        <Checkbox checked={step.stepComplete} onChange={() => handleStepToggleCompletion(step.id)} />
                                     </TableCell>
 
                                     <TableCell>

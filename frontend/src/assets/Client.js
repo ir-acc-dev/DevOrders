@@ -24,17 +24,18 @@ export const updateTaskDescription = (id, description) => {
     });
 };
 
+export const toggleStepCompletion = (id) => axios.put(BASE_URL + "/" + id + "/toggle-completion");
 
-// @PutMapping("/tasks/{taskId}/des")
-// public ResponseEntity<Task> updateTaskDescription(@PathVariable Long taskId, @RequestBody String description) {
-//     try {
-//         Task updatedTask = stepService.updateTaskDescription(taskId, description);
-//         return new ResponseEntity<>(updatedTask, HttpStatus.OK);
+
+// @PutMapping("/{id}/toggle-completion")
+// public ResponseEntity<Step> toggleStepCompletion(@PathVariable Long id) {
+//     try{
+//         Step updatedStep = stepService.toggleStepCompletion(id);
+//         return new ResponseEntity<>(updatedStep, HttpStatus.OK);
 //     }catch (RuntimeException e) {
 //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //     }
 // }
-
 
 
 
