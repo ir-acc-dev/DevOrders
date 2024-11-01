@@ -1,5 +1,5 @@
 import './App.css'
-import MainList from "./components/MainList.jsx";
+import MainList from "./components/MainList/MainList.jsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import HomePage from "./components/HomePage.jsx";
 import React from "react";

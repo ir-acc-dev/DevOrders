@@ -1,0 +1,16 @@
+.mainContainer {
+    height: auto; /* Adjust height to be flexible */
+    width: 95vw;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center vertically */
+    margin: 0 auto; /* Center the Box itself within the parent */
+    text-align: center; /* Center text inside the Box */
+}
+
+.title-button-box {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 16px;
+}

@@ -1,18 +1,10 @@
-import {
-    Box, Button, Checkbox, Collapse, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography
-} from "@mui/material";
+import {Box, Button, Checkbox, Collapse, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import AddIcon from '@mui/icons-material/Add';
 import React, { useEffect, useState } from "react";
-import {
-    addStep,
-    getAllSteps,
-    addTask,
-    updateStepDescription,
-    updateTaskDescription,
-    toggleStepCompletion, toggleTaskCompletion, deleteStep, deleteTask
-} from "../assets/Client.js";
+import {addStep, getAllSteps, addTask, updateStepDescription, updateTaskDescription, toggleStepCompletion, toggleTaskCompletion, deleteStep, deleteTask} from "../../assets/Client.js";
+import './MainList.css'
 
 const MainList = () => {
     const [expandedRows, setExpandedRows] = useState({});
@@ -178,13 +170,14 @@ const MainList = () => {
             })
     }
 
-
     return (
-        <Box>
-            <Typography variant="h4">List</Typography>
-            <Button onClick={handleAddStep} variant="contained" color="primary" style={{ margin: '10px 0' }}>
-                Add Step
-            </Button>
+        <Box className="mainContainer">
+
+            <Box className="title-button-box">
+                <Typography variant="h4" className="title">Fullstack Application Checklist</Typography>
+                <Button onClick={handleAddStep} variant="contained" color="primary" sx = {{marginLeft: '10px'}}>Add Step</Button>
+            </Box>
+
 
             <TableContainer component={Paper}>
                 <Table>
