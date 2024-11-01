@@ -11,7 +11,7 @@ import {
     addTask,
     updateStepDescription,
     updateTaskDescription,
-    toggleStepCompletion, toggleTaskCompletion, deleteStep
+    toggleStepCompletion, toggleTaskCompletion, deleteStep, deleteTask
 } from "../assets/Client.js";
 
 const MainList = () => {
@@ -168,6 +168,16 @@ const MainList = () => {
             })
     }
 
+    const removeTask = (id) => {
+        deleteTask(id)
+            .then(() => {
+                listAllSteps()
+            })
+            .catch((error) => {
+                console.error("Failed to delete task", error);
+            })
+    }
+
 
     return (
         <Box>
@@ -252,7 +262,7 @@ const MainList = () => {
                                                                 ) : (
                                                                     <Button onClick={() => handleEditTaskClick(task)}>Edit</Button>
                                                                 )}
-                                                                <Button>Delete</Button>
+                                                                <Button onClick={() => removeTask(task.id)}>Delete</Button>
                                                             </TableCell>
                                                         </TableRow>
                                                     ))}

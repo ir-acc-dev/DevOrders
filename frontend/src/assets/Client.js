@@ -30,16 +30,8 @@ export const toggleTaskCompletion = (id) => axios.put(BASE_URL + "/tasks/" + id 
 
 export const deleteStep = (id) => axios.delete(BASE_URL + "/" + id);
 
+export const deleteTask =  (id) => axios.delete(BASE_URL + "/tasks/" + id)
 
-// @DeleteMapping("/{id}")
-// public ResponseEntity<Void> deleteStep(@PathVariable Long id) {
-//     try {
-//         stepService.deleteStep(id);
-//         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//     } catch (RuntimeException e) {
-//         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//     }
-// }
 
 
 
