@@ -11,7 +11,7 @@ import {
     addTask,
     updateStepDescription,
     updateTaskDescription,
-    toggleStepCompletion, toggleTaskCompletion
+    toggleStepCompletion, toggleTaskCompletion, deleteStep
 } from "../assets/Client.js";
 
 const MainList = () => {
@@ -158,6 +158,16 @@ const MainList = () => {
         })
     }
 
+    const removeStep = (id) => {
+        deleteStep(id)
+            .then(() => {
+                listAllSteps()
+            })
+            .catch((error) => {
+                console.error("Failed to delete Step", error);
+            })
+    }
+
 
     return (
         <Box>
@@ -179,6 +189,7 @@ const MainList = () => {
                         {steps.map((step) => (
                             <React.Fragment key={step.id}>
                                 <TableRow className="table-row">
+
                                     <TableCell>
                                         <Checkbox checked={step.stepComplete} onChange={() => handleStepToggleCompletion(step.id)} />
                                     </TableCell>
@@ -201,7 +212,8 @@ const MainList = () => {
                                         ) : (
                                             <Button onClick={() => handleEditStepClick(step)}>Edit</Button>
                                         )}
-                                        <Button>Delete</Button>
+                                        <Button onClick={() => removeStep(step.id)}>Delete</Button>
+
                                         <IconButton onClick={() => handleAddTaskClick(step.id)}>
                                             <AddIcon />
                                         </IconButton>

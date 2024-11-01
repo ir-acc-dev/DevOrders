@@ -28,7 +28,18 @@ export const toggleStepCompletion = (id) => axios.put(BASE_URL + "/" + id + "/to
 
 export const toggleTaskCompletion = (id) => axios.put(BASE_URL + "/tasks/" + id + "/toggle-completion");
 
+export const deleteStep = (id) => axios.delete(BASE_URL + "/" + id);
 
+
+// @DeleteMapping("/{id}")
+// public ResponseEntity<Void> deleteStep(@PathVariable Long id) {
+//     try {
+//         stepService.deleteStep(id);
+//         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//     } catch (RuntimeException e) {
+//         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//     }
+// }
 
 
 
