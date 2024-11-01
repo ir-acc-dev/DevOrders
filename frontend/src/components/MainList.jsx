@@ -11,7 +11,7 @@ import {
     addTask,
     updateStepDescription,
     updateTaskDescription,
-    toggleStepCompletion
+    toggleStepCompletion, toggleTaskCompletion
 } from "../assets/Client.js";
 
 const MainList = () => {
@@ -141,6 +141,23 @@ const MainList = () => {
         })
     }
 
+    const handleTaskToggleCompletion = (id) => {
+        toggleTaskCompletion(id)
+            .then((response) => {
+                const updatedTask = response.data;
+                setSteps((prevSteps) =>
+                    prevSteps.map((step) => ({
+                        ...step,
+                        tasks: step.tasks.map((task) =>
+                            task.id === id ? { ...task, taskComplete: updatedTask.taskComplete } : task
+                        )
+                    }))
+                )
+            }).catch((error) => {
+                console.error("Failed to edit Task", error);
+        })
+    }
+
 
     return (
         <Box>
@@ -204,7 +221,7 @@ const MainList = () => {
                                                     {step.tasks.map((task) => (
                                                         <TableRow key={task.id}>
                                                             <TableCell style={{ width: "10%" }}>
-                                                                <Checkbox checked={task.taskComplete} />
+                                                                <Checkbox checked={task.taskComplete} onChange={() => handleTaskToggleCompletion(task.id)} />
                                                             </TableCell>
                                                             <TableCell style={{ width: "70%", paddingLeft: 32 }}>
                                                                 {editingTaskId === task.id ? (

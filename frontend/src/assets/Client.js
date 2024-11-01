@@ -26,16 +26,8 @@ export const updateTaskDescription = (id, description) => {
 
 export const toggleStepCompletion = (id) => axios.put(BASE_URL + "/" + id + "/toggle-completion");
 
+export const toggleTaskCompletion = (id) => axios.put(BASE_URL + "/tasks/" + id + "/toggle-completion");
 
-// @PutMapping("/{id}/toggle-completion")
-// public ResponseEntity<Step> toggleStepCompletion(@PathVariable Long id) {
-//     try{
-//         Step updatedStep = stepService.toggleStepCompletion(id);
-//         return new ResponseEntity<>(updatedStep, HttpStatus.OK);
-//     }catch (RuntimeException e) {
-//         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//     }
-// }
 
 
 
