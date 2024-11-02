@@ -18,6 +18,7 @@ const MainList = () => {
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [editingTaskDescription, setEditingTaskDescription] = useState("");
 
+
     const listAllSteps = async () => {
         try {
             const res = await getAllSteps();
@@ -64,13 +65,25 @@ const MainList = () => {
         try {
             const newTask = { description: newTaskDescription, taskComplete: false };
             const response = await addTask(stepId, newTask);
+            const savedTask = response.data;
+
             setSteps((prevSteps) =>
                 prevSteps.map((step) =>
-                    step.id === stepId ? { ...step, tasks: [...step.tasks, response.data] } : step
+                    step.id === stepId
+                        ? {
+                            ...step,
+                            tasks: step.tasks ? [...step.tasks, savedTask] : [savedTask],
+                        }
+                        : step
                 )
             );
+
+            await listAllSteps();
+
             setNewTaskDescription("");
             setAddingTaskForStep(null);
+
+
         } catch (err) {
             console.error("Failed to add Task", err);
         }
