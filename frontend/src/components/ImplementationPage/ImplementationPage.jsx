@@ -15,11 +15,10 @@ const ImplementationPage = () => {
             .then((text) => setMarkdownContent(text))
     }, []);
 
+
     return (
         <Box className="page-container">
-
             <ReactMarkdown className='markdown-body'>{markdownContent}</ReactMarkdown>
-
         </Box>
 
     );
