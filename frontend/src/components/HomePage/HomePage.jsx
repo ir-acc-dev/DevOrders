@@ -1,5 +1,6 @@
 import {Box, Button, Card, CardActions, CardContent, Container, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import './HomePage.css'
 
 
 const HomePage = () => {
@@ -20,7 +21,7 @@ const HomePage = () => {
 
 
     return (
-        <>
+        <div className="Home-Page">
             <Box
                 sx={{
                     height: '40vh',
@@ -88,11 +89,9 @@ const HomePage = () => {
 
                 </Box>
 
-
             </Container>
 
-
-        </>
+        </div>
     );
 };
 

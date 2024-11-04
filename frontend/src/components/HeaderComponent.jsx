@@ -3,10 +3,10 @@ import {NavLink} from "react-router-dom";
 
 const HeaderComponent = () => {
     return (
-        <Box sx={{marginBottom: 4}}>
+        <Box sx={{marginBottom: 0}}>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h6" sx={{flexGrow: 1}}> App Name </Typography>
+                    <Typography variant="h6" sx={{flexGrow: 1}}> Roadmap </Typography>
 
                     <Box sx={{display: 'flex'}}>
                         <Button component={NavLink} to="/" color="inherit" sx={{textTransform: 'none'}}> Home </Button>

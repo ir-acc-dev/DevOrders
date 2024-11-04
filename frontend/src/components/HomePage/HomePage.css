@@ -1,0 +1,9 @@
+.Home-Page{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../assets/BG1.jpg'); /* Relative path to your image */
+    background-size: cover; /* Adjust to cover the entire container */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    height: 100vh;
+}
+
+

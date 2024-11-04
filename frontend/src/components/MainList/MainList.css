@@ -5,7 +5,8 @@
     flex-direction: column; /* Stack items vertically */
     align-items: center; /* Center vertically */
     margin: 0 auto; /* Center the Box itself within the parent */
-    text-align: center; /* Center text inside the Box */
+    text-align: center;
+    margin-top: 20px/* Center text inside the Box */
 }
 
 .title-button-box {
